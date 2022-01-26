@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import '../App.css';
 import { useHistory } from 'react-router-dom';
-import { ChatEngine } from 'react-chat-engine';
 import { auth } from '../firebase';
+
+import { ChatEngine } from 'react-chat-engine'
 
 
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 
+import config from '../cofig';
 
-const Chats = () => {
+const Chats = (props) => {
 
     const history = useHistory();
 
@@ -34,7 +37,7 @@ const Chats = () => {
 
 
     const getUser = (user) => {
-        fetch('https://api.chatengine.io/users/me/', { headers: { "PRIVATE-KEY": "78c3e2bf-6096-4147-bbc8-dfdf6d903285" } })
+        fetch('https://api.chatengine.io/users/me/', { headers: { "PRIVATE-KEY": config.REACT_CHAT_APP_KEY } })
             .then((res) => res.json())
             .then((res) => {
                 console.log(res);
@@ -63,7 +66,7 @@ const Chats = () => {
 
 
 
-        axios.post('https://api.chatengine.io/users/', postUser, { headers: { "PRIVATE-KEY": "78c3e2bf-6096-4147-bbc8-dfdf6d903285" } })
+        axios.post('https://api.chatengine.io/users/', postUser, { headers: { "PRIVATE-KEY": config.REACT_CHAT_APP_KEY } })
             .then((res) => {
                 console.log("post success");
                 setLoading(false);
@@ -99,14 +102,21 @@ const Chats = () => {
         <div className='chat-page'>
             <div className='nav-bar'>
                 <div className='logo-tab'>
-                    Chat App
+                    Chatup
                 </div>
                 <div onClick={logout} className='logout-tab'>
                     Logout
                 </div>
             </div>
 
-            <ChatEngine height="calc(100vh-66px)" projectID="e6c0bf94-36fc-44ac-97e6-a9953508914a" userName={user.email} userSecret={user.uid} />
+            {/* <ChatEngine projectID={config.REACT_CHAT_APP_ID} userName={user.email} userSecret={user.uid} /> */}
+
+            <ChatEngine
+                height="calc(100vh-66px)"
+                projectID={config.REACT_CHAT_APP_ID}
+                userName={user.email}
+                userSecret={user.uid}
+            />
 
         </div>
     );

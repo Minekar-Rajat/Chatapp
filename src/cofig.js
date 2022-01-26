@@ -1,0 +1,2 @@
+exports.REACT_CHAT_APP_KEY = '78c3e2bf-6096-4147-bbc8-dfdf6d903285';
+exports.REACT_CHAT_APP_ID = 'e6c0bf94-36fc-44ac-97e6-a9953508914a'; 
