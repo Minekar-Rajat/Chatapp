@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../App.css';
 import { useHistory } from 'react-router-dom';
 import { auth } from '../firebase';
@@ -51,7 +51,7 @@ const Chats = (props) => {
             });
     }
 
-    const postUser = (user) => {
+    const postUser = useCallback((user) => {
         var postUser = {
             "email": user.email,
             "username": user.email,
@@ -82,7 +82,9 @@ const Chats = (props) => {
                 console.log(err);
             });
 
-    }
+    }, []);
+
+
 
     useEffect(() => {
         if (!user) {
@@ -98,7 +100,7 @@ const Chats = (props) => {
         }
 
 
-    }, [user, history, newUser]);
+    }, [user, history, newUser, postUser]);
 
 
     if (!user || loading)
