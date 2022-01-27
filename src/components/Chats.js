@@ -27,12 +27,12 @@ const Chats = (props) => {
         history.push('/');
     }
 
-    // const getFile = async (url) => {
-    //     const resp = fetch(url);
-    //     const data = (await resp).blob();
+    const getFile = async (url) => {
+        const resp = fetch(url);
+        const data = (await resp).blob();
 
-    //     return new File([data], 'userPhoto.jpg', { type: 'image/jpeg' })
-    // }
+        return new File([data], 'userPhoto.jpg', { type: 'image/jpeg' })
+    }
 
 
 
@@ -62,6 +62,12 @@ const Chats = (props) => {
         userData.append('email', user.email);
         userData.append('username', user.email);
         userData.append('secret', user.uid);
+
+        getFile(user.photoURL)
+            .then((avatar) => {
+                userData.append('avatar', avatar, avatar.name);
+            })
+            .catch((err) => console.log(err));
 
 
 
